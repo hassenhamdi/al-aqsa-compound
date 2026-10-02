@@ -3,6 +3,7 @@
 Play it: https://hassenhamdi.github.io/al-aqsa-compound/ (video: docs/al-aqsa-flyover.mp4)
 
 Walk the Haram al-Sharif in the browser. Dome of the Rock, Qibli mosque, the small domes, four minarets, sabils, olive gardens. Twelve gold markers tell the history of each stop, or take the guided tour.
+![shots](docs/gallery/w3-tour-sheet.png)
 
 ![aerial](docs/gallery/aerial.png)
 ![Dome of the Rock](docs/gallery/dome-closeup.png)
