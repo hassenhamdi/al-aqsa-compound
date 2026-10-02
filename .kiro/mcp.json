@@ -1,0 +1,1 @@
+{"mcpServers": {"exa": {"args": ["mcp-server-exa"], "command": "npx", "disabled": false}, "tavily": {"args": ["mcp-server-tavily"], "command": "npx", "disabled": false}, "threejs-devtools": {"args": ["threejs-devtools-mcp"], "command": "npx", "disabled": false}}}

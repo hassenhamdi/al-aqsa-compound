@@ -1,0 +1,24 @@
+# REFINE.md — placeholders & upgrade plan
+| object | gap | plan | candidate repo/approach | cost |
+|---|---|---|---|---|
+| vegetation olives | OPEN-TREE direct port (user order): opentree.js core + olive preset; painters verbatim (drawCluster oak layout, PROF ripple, veins, bark fissure/albedo, olive palette shift only); 256 anchors × crossed quads, dense sprite, TRAD 8, pruned tips, envMap 0.25 | user side-by-side defects fixed: density/fusion, hexagon, spikes, washout; closeup+mid PASS vs oak bar | /home/hassenhamdi/open-tree.html + references/trees/oak-open-tree.png | done |
+| Qibli floor/mihrab readability | P3a DONE + P4e walk spawn y=3.6 (main.js) + P6 E-enter verified eye-level (docs/gates-p4e.md, fps-p6-enter) | — | awesome procedural-materials | done |
+| Dome Rock readability | P3b DONE (drum/dome/soffit read; rock 0x6f665c, lamp 60→16) + P6 dome E-enter verified eye-level; residual: rock overexposes under direct sunset W-arch sun (lamp-independent) | dome-owner: arch sun-break or rock albedo trim | awesome exposure-color-grading | low |
+| Dome arch ablaq | P4a DONE: ablaq voussoir canvas on arcade arches (cream/charcoal/rust courses) — reads vs 2018-01 (docs/dome-tex-p4a.md) | — | awesome procedural-materials | done |
+| Dome finial stack | P5b DONE: rod 4.6→2.6, orbs compressed, crescent +4.35→+2.3 (R .7); apex ~39.8→~36.5, silhouette verified ?view=1 (docs/dome-tex-p4a.md log) | — | in-house | done |
+| Dome soffit closeup | arabesque gilt texture replaced stripes but apex unverified from interior views | dedicated up-shot via drum eye | awesome visual-validation | low |
+| Dome rock micro-noise | 14x10 jitter facets read coarse <4m | finer FBM displacement on rock top | awesome procedural-geometry | low |
+| terrace marble glare | sun-facing marble courts clip white at sunset (facade shot) | roughness/albedo trim in materials.js (R1) or sun 2.2→2.0 | awesome exposure-color-grading | low |
+| draw calls 215 aerial (was 1235) vs ≤150 | merge pass + studio scopes + static shadow cache + wave content (infill/water/furniture shared mats), zero sibling edits | remaining: 45 unique-material singletons need owner consolidation; poles/root pass | vibe instancing-materials | med |
+| fountain water | W7 DONE: analytic ripple normals + 48² CPU ripple sim, Beer-Lambert fallback, Schlick F0 .02, Dome-mirror lobe (docs/w7-water.md); residual: slight grazing zebra | widen lobe falloff / damp drip-ring term | in-house | low |
+| furniture/garments/text | carpets flat, no furnishings, calligraphy faked | prayer-row props, fabric drape (static), CanvasTexture kufic band + Troika text only for labels | three examples, fontloader | low |
+| crowds/visitors | CPU-ticked, N matrices | VAT bake 1 call/material | https://github.com/MikeFernandez-Pro/three-vat | low-med — needs three>=0.186 check |
+| western cloister blockout (P3-STRUCT) | P4d TEX DONE: honey/pale ashlar, ablaq stripes, oak doors (M.darkWood), grille windows, plank benches, iron+amber lanterns (minorDomes.js TEX block); form still coarse | world-scale UVs (merged-box 0..1 stretch visible <15 m); museum dome + forecourt spolia still missing (museum-2013.jpg) | awesome procedural-materials | med |
+| portico bay i=14 zero-scaled (Qattanin axis) | cross-module instance surgery on platform.js colonnade, assumption pinned in code | platform-owner confirm, or true bay subtraction in platform.js | — | low |
+| main.js fountain collider stale | FIXED P4e: Al-Kas (20,30,r7) + Qasim (-45,-30,r6) (docs/gates-p4e.md) | — | — | done |
+| cypress perimeter (12) | dropped in oliveGrove swap (vegetation.js retired) | re-add as 1 instanced mesh | vegetation.js cypress block (reference) | trivial |
+| drum glass closeup | insets halo-white <30m at noon (bloom-threshold ownership, not albedo — materials trimmed, holds) | main: apply docs/w8-postspec.md §2 (threshold .9, radius .4, noon .15/night .45), re-shoot | awesome bloom skill | low |
+| shared glass adoption | qibli qGlass (137) + struct amberGlass duplicate stained/clear palettes | owners swap to M.glassStained / M.glassClear + tickers per docs/w8-glass.md | docs/w8-glass.md | low |
+| Sabil Qasim Pasha siting (-45,-30) | base GY=2 sits inside 110×110 terrace box (top 5.2): kiosk buried, only dome+finial show (W7 found, not moved — shared positions frozen) | struct owner: shift W clear of x=-55 or raise to TY | — | low |
+| 4 flagpoles + cloth (atmosphere.js:128-150, [-50,-125],[50,-125],[-70,122],[70,122]) | ZERO photo doc; qibli-ne/qanatir/aerials show bare courts, no flags (pole audit 2026-10-02, docs/poles.md) | atmosphere owner: delete flagSpots loop (file off-limits to pole agent) | — | trivial |
+| Qibli court lamp survivor (6,108) | single-view evidence (qibli-ne.jpg), globe style guessed vs real street-arm | 2nd closeup ref → rebuild as street-arm lamp | in-house | low |

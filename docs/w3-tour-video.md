@@ -1,0 +1,7 @@
+# w3-tour-video — freecam shake fix + 12-stop tour video
+Shake cause (proven): main-loop `controls.update()` enforces `maxPolarAngle=1.52` on freecam's pivot target — level looks ratcheted +0.76 m/frame (7→29.8 m, zero input); `minDistance=2` shoves close pivots; damping residuals drift.
+Fix (freecam.js only): enter snapshots + neutralizes orbit constraints (damping off, min 0, polar π; restored on exit); speed scales with pivot distance (`clamp(pivot*0.9,1,12)`×boost); critically-damped velocity (exp approach, reset on teleports); dynamic near plane (`pivot*0.05`, restored); new `place()/pose()` debug APIs.
+Verify: strafe metric 113 m drift → 0.0000 m, 0 reversals, euler const; static pose holds 500 ms; docs/w3-shake-after.png (Qibli porch closeup, no clip; before-shot framing couldn't hold still).
+Tour: `build_tour_traj()` (TOUR_ORDER 1,3,4,5,6,11,2,7,8,9,10,12; curated angles; studio fit for compact parts only; mihrab stays 14 m interior; 3 s dwell + 2.5 s +25 m lifts; interior dive = official-tour behavior). `scripts/make-video.mjs --tour` → docs/al-aqsa-tour.mp4 (1905f, 63.5 s, 30fps, 1280×800) + .gif + docs/w3-tour-sheet.png (12 dwell-mid frames) + stops JSON.
+Sheet verdicts: 11 PASS (hero/qibli full-frame ~90 m, mihrab carpets+columns, gates/minarets/olives correct); Qasim PARTIAL (kiosk small, Dome dominates). Only page error = favicon 404.
+`node --check` clean, no new lights/deps. Next: curated per-stop traj JSONs for tighter framings (e.g. Qasim kiosk closeup).

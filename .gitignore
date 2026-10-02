@@ -1,0 +1,26 @@
+# Build / deps
+node_modules/
+package-lock.json
+
+# Captures & video (large) — shared separately, see docs/
+shots/
+docs/*.mp4
+docs/*.gif
+
+# Reference originals (large full-size; 1280px sets in subfolders are kept)
+references/*.jpg
+references/*.jpeg
+
+# Vendored third-party (re-cloneable)
+_thirdparty/
+_skills/awesome/
+_skills/vibe/
+_docs/
+
+# Host-local planning mirror
+.planning/
+
+# OS / editor
+.DS_Store
+*.log
+nohup.out

@@ -1,0 +1,62 @@
+[
+ {
+  "n": 1,
+  "title": "Dome of the Rock",
+  "frame": 45
+ },
+ {
+  "n": 3,
+  "title": "Dome of the Ascension",
+  "frame": 210
+ },
+ {
+  "n": 4,
+  "title": "Dome of the Prophet",
+  "frame": 375
+ },
+ {
+  "n": 5,
+  "title": "Al-Qibli Mosque",
+  "frame": 540
+ },
+ {
+  "n": 6,
+  "title": "Mihrab & Minbar",
+  "frame": 705
+ },
+ {
+  "n": 11,
+  "title": "Gates of the Haram",
+  "frame": 870
+ },
+ {
+  "n": 2,
+  "title": "Dome of the Chain",
+  "frame": 1035
+ },
+ {
+  "n": 7,
+  "title": "Al-Kas Fountain",
+  "frame": 1200
+ },
+ {
+  "n": 8,
+  "title": "Sabil of Qaitbay",
+  "frame": 1365
+ },
+ {
+  "n": 9,
+  "title": "Sabil of Qasim Pasha",
+  "frame": 1530
+ },
+ {
+  "n": 10,
+  "title": "The Four Minarets",
+  "frame": 1695
+ },
+ {
+  "n": 12,
+  "title": "Olive Garden",
+  "frame": 1860
+ }
+]

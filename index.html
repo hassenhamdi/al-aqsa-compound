@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Al-Aqsa Compound — Haram al-Sharif | Interactive Discovery</title>
+<style>
+  :root{ --gold:#d9a441; --ink:#f5efe2; --panel:rgba(12,14,20,.82); --line:rgba(217,164,65,.35); }
+  *{box-sizing:border-box} html,body{margin:0;height:100%;overflow:hidden;background:#0b0e14;color:var(--ink);font-family:Inter,system-ui,Segoe UI,Roboto,Arial}
+  #app{position:fixed;inset:0} canvas{display:block}
+  #loader{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:radial-gradient(120% 100% at 50% 20%,#1a2233 0%,#0b0e14 60%);z-index:50;transition:opacity .8s}
+  #loader.done{opacity:0;pointer-events:none}
+  #loader h1{font-weight:700;letter-spacing:.14em;font-size:15px;color:var(--gold);margin:18px 0 6px}
+  #loader p{opacity:.7;font-size:13px;max-width:520px;text-align:center;line-height:1.6}
+  .crescent{width:74px;height:74px;border-radius:50%;box-shadow:14px 10px 0 0 var(--gold);transform:rotate(-18deg)}
+  #bar{width:280px;height:3px;background:rgba(255,255,255,.12);margin-top:18px;border-radius:99px;overflow:hidden}
+  #bar i{display:block;height:100%;width:10%;background:var(--gold);transition:width .3s}
+  .hud{position:fixed;z-index:10;pointer-events:none}
+  #top{top:0;left:0;right:0;display:flex;justify-content:space-between;align-items:flex-start;padding:14px 16px}
+  .pill{pointer-events:auto;background:var(--panel);border:1px solid var(--line);backdrop-filter:blur(10px);border-radius:14px;padding:8px 12px;font-size:12px;display:flex;gap:10px;align-items:center}
+  .pill b{color:var(--gold)} button{pointer-events:auto;cursor:pointer;background:rgba(217,164,65,.14);border:1px solid var(--line);color:var(--ink);border-radius:10px;padding:7px 11px;font-size:12px}
+  button:hover,button.on{background:var(--gold);color:#111;border-color:var(--gold)}
+  button:disabled{opacity:.4}
+  #title{max-width:430px}
+  #title h2{margin:0;font-size:17px;letter-spacing:.02em}
+  #title h2 span{color:var(--gold)}
+  #title small{opacity:.75;line-height:1.5;display:block;margin-top:4px;font-size:12px}
+  #right{display:flex;flex-direction:column;gap:8px;align-items:flex-end}
+  #modes{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+  #times{display:flex;gap:6px}
+  #side{top:76px;right:16px;width:360px;max-width:calc(100vw - 32px);max-height:calc(100vh - 190px);overflow:auto;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:16px 16px 14px;pointer-events:auto;backdrop-filter:blur(12px);display:none}
+  #side.show{display:block}
+  #side h3{margin:0 0 2px;font-size:16px} #side h3 em{color:var(--gold);font-style:normal}
+  #side .ar{text-align:right;color:var(--gold);font-size:16px;margin:2px 0 8px}
+  #side p{font-size:13px;line-height:1.65;opacity:.92;margin:8px 0}
+  #side .meta{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}
+  #side .meta span{font-size:11px;border:1px solid var(--line);border-radius:99px;padding:3px 9px;color:var(--gold)}
+  #side img.ph{width:100%;border-radius:10px;border:1px solid rgba(255,255,255,.12);margin-top:8px}
+  #tour{bottom:16px;left:50%;transform:translateX(-50%);display:flex;gap:8px;align-items:center;pointer-events:auto;background:var(--panel);border:1px solid var(--line);border-radius:99px;padding:8px 8px 8px 14px;backdrop-filter:blur(12px);font-size:12px;max-width:calc(100vw - 24px)}
+  #tour .dot{width:8px;height:8px;border-radius:50%;background:var(--gold);box-shadow:0 0 12px var(--gold)}
+  #help{bottom:16px;left:16px;font-size:11px;line-height:1.7;opacity:.85;background:var(--panel);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:8px 11px;pointer-events:auto}
+  #stats{bottom:16px;right:16px;font-size:11px;text-align:right;opacity:.9}
+  #cine{position:fixed;inset:0;z-index:20;pointer-events:none;display:flex;flex-direction:column;justify-content:space-between;opacity:0;transition:opacity .6s}
+  #cine.on{opacity:1} #cine .bar{height:9vh;background:#000}
+  #cineCap{text-align:center;font-size:15px;letter-spacing:.06em;text-shadow:0 2px 18px #000}
+  #cineCap small{display:block;color:var(--gold);letter-spacing:.22em;font-size:11px;margin-bottom:6px}
+  .marker{pointer-events:auto;cursor:pointer;text-align:center;transform:translateY(-6px)}
+  .marker div{width:26px;height:26px;margin:0 auto;border-radius:50%;background:radial-gradient(circle at 35% 30%,#ffe9b0,#d9a441 60%,#7a5210);border:2px solid #fff3;display:flex;align-items:center;justify-content:center;color:#201500;font-weight:800;font-size:13px;box-shadow:0 4px 18px rgba(0,0,0,.5)}
+  .marker span{font-size:10px;background:rgba(0,0,0,.65);padding:2px 7px;border-radius:99px;border:1px solid var(--line);white-space:nowrap}
+  #toast{position:fixed;top:70px;left:50%;transform:translateX(-50%);z-index:30;background:#0e1420;border:1px solid var(--line);padding:8px 14px;border-radius:99px;font-size:12px;display:none}
+  #vign{position:fixed;inset:0;pointer-events:none;z-index:5;background:radial-gradient(115% 90% at 50% 45%,transparent 62%,rgba(0,0,0,.42) 100%)}
+  @media(max-width:760px){ #title small{display:none} #help{display:none} #side{top:auto;bottom:74px} }
+</style>
+<script type="importmap">
+{ "imports": {
+  "three": "https://unpkg.com/three@0.170.0/build/three.module.js",
+  "three/addons/": "https://unpkg.com/three@0.170.0/examples/jsm/"
+} }
+</script>
+</head>
+<body>
+<div id="app"></div>
+<div id="vign"></div>
+
+<div id="loader"><div class="crescent"></div>
+  <h1>HARAM AL-SHARIF • AL-AQSA COMPOUND</h1>
+  <p>Building the Noble Sanctuary — Dome of the Rock, Qibli Mosque, courtyards, minarets & olive gardens.<br/>Procedural stone, gold, tile-mosaic and dusk light. Based on exterior & interior photo references.</p>
+  <div id="bar"><i></i></div><p id="loadmsg" style="font-size:11px">loading modules…</p>
+</div>
+
+<div class="hud" id="top">
+  <div class="pill" id="title"><div><h2>AL-AQSA <span>• Full Compound Discovery</span></h2>
+  <small>Educative walk • character • cinematic • interior access — drag to orbit • scroll to zoom • click gold markers</small></div></div>
+  <div id="right">
+    <div class="pill" id="modes">
+      <b>MODE</b>
+      <button id="bOrbit" class="on">Orbit</button>
+      <button id="bWalk">Walk 🧍</button>
+      <button id="bCine">Cinematic ▶</button>
+      <button id="bTour">Guided Tour</button>
+    </div>
+    <div class="pill" id="times"><b>LIGHT</b>
+      <button data-t="dawn">Dawn</button><button data-t="noon">Noon</button>
+      <button data-t="sunset" class="on">Sunset</button><button data-t="night">Night</button>
+    </div>
+    <div class="pill"><b>QUALITY</b>
+      <button id="qAuto" class="on">Auto</button><button id="qHigh">High</button><button id="qMed">Med</button><button id="qLow">Low</button>
+      <span id="fps" style="opacity:.8">— fps • — calls</span>
+    </div>
+  </div>
+</div>
+
+<div class="hud" id="side"></div>
+
+<div class="hud" id="tour"><div class="dot"></div><span id="tourTxt">Press <b>Guided Tour</b> or click any gold marker — 12 stops with history & architecture.</span>
+<button id="tourPrev">‹</button><button id="tourNext">›</button><button id="tourClose">✕</button></div>
+
+<div class="hud" id="help">⌨️ <b>WASD / arrows</b> move • <b>Shift</b> run • <b>E</b> enter mosque • <b>C</b> cinematic • <b>1–9</b> viewpoints • <b>Esc</b> exit walk<br/>🕌 Interior: Qibli hall + Dome of the Rock ambulatory are walkable — watch the mihrab, minbar & chandeliers</div>
+<div class="hud pill" id="stats">Haram platform 450×300 m • Dome of the Rock Ø20.4 m • Qibli 83×56 m</div>
+<div id="toast"></div>
+<div id="cine"><div class="bar"></div><div id="cineCap"><small>AL-AQSA • CINEMATIC</small><span id="cineTxt"></span></div><div class="bar"></div></div>
+
+<script type="module" src="./main.js"></script>
+</body>
+</html>
