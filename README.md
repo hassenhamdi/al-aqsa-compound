@@ -1,21 +1,34 @@
-# Al-Aqsa Compound — Haram al-Sharif interactive discovery
+# Al-Aqsa compound in 3D
 
-Three.js r170 ESM, no build. Serve: `python3 -m http.server 8099` → `http://localhost:8099/index.html`.
+Play it: https://hassenhamdi.github.io/al-aqsa-compound/ (video: docs/al-aqsa-flyover.mp4)
 
-🎬 **[Flyover video](docs/al-aqsa-flyover.mp4)** (8 s, 30 fps — freecam trajectory aerial→Dome→porch→olives) · preview GIF alongside.
+Walk the Haram al-Sharif in the browser. Dome of the Rock, Qibli mosque, the small domes, four minarets, sabils, olive gardens. Twelve gold markers tell the history of each stop, or take the guided tour.
+
+Built with three.js r170. No build step.
+
+## Run it yourself
+
+1. `git clone https://github.com/hassenhamdi/al-aqsa-compound.git`
+2. `cd al-aqsa-compound && python3 -m http.server 8099`
+3. Open `http://localhost:8099/index.html`
+
+First visit downloads three.js from a CDN and caches it, so repeat loads work offline.
 
 ## Controls
-- **Orbit / Walk / Cinematic / Guided Tour** modes + **Photo 📷** freecam (F enters, WASD+ E/Q fly, F frames labels, **X ultra still**, R/T/V record/replay/export trajectory, P/Esc exits).
-- Walk/FPS: WASD + Shift run, Space jump, E enter mosque, V toggles FPS.
-- Light: dawn/noon/sunset/night · Quality: auto/high/med/low · 1–9 viewpoints.
 
-## Educative layer
-12 gold markers + guided tour following the events thread (Isra'→qibla→Umar→Saladin→1969). Lesson texts: `content/lessons.md`.
+F enters photo mode. Click a gold marker for its story.
+- Orbit, walk, FPS (V toggles), cinematic, guided tour
+- WASD + Shift run, Space jump, E enter a mosque
+- Dawn, noon, sunset, night lighting; auto, high, med, low quality
 
-## Project map
-`AGENTS.md` (shared agent ground) · `PIPELINE.md` · `REFINE.md` · `KIRO.md` (exam evidence map) · `references/` (48 grounded photos + INDEX) · `docs/` (per-task logs, shots, video) · `tracks/` (per-object specs) · `content/lessons.md` · `.kiro/` (specs/steering/hooks/agents/MCP) · `my-power/` (bonus power).
+The tour follows the events thread: Isra, the qibla turn, Umar, Saladin, 1969, the living sanctuary today.
 
-## Capture (dGPU GTX 1650 Ti, D129)
-`node scripts/shot-dgpu.mjs "<url>?nohud=1&view=N" shots/x.png` · batch JSON + custom pos/tgt supported.
-Video: record traj in photo mode (R), `node scripts/make-video.mjs <traj.json>`.
-Rule: visualize with HUD OFF before submit; low-fi → PLACEHOLDER + REFINE row.
+## What is in the repo
+
+- `content/lessons.md`: the twelve stop texts the tour reads
+- `references/`: 48 grounded photos with an index
+- `tracks/`: one spec per building (objective, checklist, acceptance views)
+- `docs/`: per-task logs, verification shots, both videos
+- `AGENTS.md`: how the subagents split the work; `KIRO.md`: exam evidence map
+
+Capture your own shots: `node scripts/shot-dgpu.mjs "<url>?nohud=1&view=N" shots/x.png`. Record a flyover: R in photo mode, then `node scripts/make-video.mjs <traj.json>`.
