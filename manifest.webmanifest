@@ -1,0 +1,11 @@
+{
+  "name": "Al-Aqsa Compound — Haram al-Sharif Discovery",
+  "short_name": "Al-Aqsa 3D",
+  "description": "Interactive educative discovery of the Al-Aqsa compound: Dome of the Rock, Qibli mosque, guided tour, photo mode.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0b0e14",
+  "theme_color": "#d9a441",
+  "icons": []
+}

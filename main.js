@@ -520,6 +520,15 @@ async function boot() {
       if (mph && ctx.D.lighting && ctx.D.lighting.setMoonPhase) ctx.D.lighting.setMoonPhase(mph);
     }
     // 10 — animate loop
+    // PWA pre-cache (no index.html edits: manifest + service worker registered here)
+    try {
+      const ml = document.createElement('link');
+      ml.rel = 'manifest'; ml.href = './manifest.webmanifest';
+      document.head.appendChild(ml);
+      if ('serviceWorker' in navigator && /^https?:$/.test(location.protocol)) {
+        navigator.serviceWorker.register('./sw.js').catch(() => {});
+      }
+    } catch (_) {}
     // static shadow cache: zero casters move (massing/trunks only — birds, flags,
     // avatar, clouds never cast), so render the 2048 map on demand, not per frame.
     // Invalidated by sun moves (preset transitions), quality-tier resizes, warmup.
